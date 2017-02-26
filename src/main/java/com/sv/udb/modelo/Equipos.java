@@ -5,7 +5,7 @@
  */
 package com.sv.udb.modelo;
 
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -15,6 +15,9 @@ public class Equipos {
     private int codiEqui;
     private String nombEqui;
     private String descEqui;
+    
+    public Equipos(){
+    }
 
     public Equipos(int codiEqui, String nombEqui, String descEqui) {
         this.codiEqui = codiEqui;
@@ -22,7 +25,7 @@ public class Equipos {
         this.descEqui = descEqui;
     }
 
-    public int getCodiEqui() {
+     public int getCodiEqui() {
         return codiEqui;
     }
 
