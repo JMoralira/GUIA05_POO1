@@ -68,7 +68,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             while (model.getRowCount()>0){model.removeRow(0);}//Limpiar modelo
             for(Partidos temp : new PartidosCtrl().constTodo())
             {
-                model.addRow(new Object[]{temp.getCodiEqui1(),temp.getCodiEqui2(),temp.getGoleEqui1(),temp.getGoleEqui2(), temp.getFechHora(), temp.getLugar()});
+                model.addRow(new Object[]{temp.getCodiEqui1(),temp.getCodiEqui2(),temp.getGoleEqui1(),temp.getGoleEqui2(), temp, temp.getLugar()});
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -504,6 +504,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        txtCodiPart.setEditable(false);
         txtCodiPart.setText("1");
         txtCodiPart.setToolTipText("");
 
@@ -1139,7 +1140,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             int fila = this.tblPartidos.getSelectedRow();
             if(fila >= 0)
             {
-                Partidos obje = (Partidos)this.tblPartidos.getValueAt(fila, 1);
+                Partidos obje = (Partidos)this.tblPartidos.getValueAt(fila, 4);
                 this.txtCodiPart.setText(String.valueOf(obje.getCodiPart()));
                 this.cmbCodiEquiPart1.setEditable(true);
                 this.cmbCodiEquiPart1.setSelectedItem((Equipos)new EquiposCtrl().concmb(obje.getCodiEqui1()));
