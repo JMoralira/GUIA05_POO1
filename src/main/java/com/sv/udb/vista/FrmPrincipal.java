@@ -1124,7 +1124,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
             {
                 JOptionPane.showMessageDialog(this, "No deje campos vacios");
             }
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
