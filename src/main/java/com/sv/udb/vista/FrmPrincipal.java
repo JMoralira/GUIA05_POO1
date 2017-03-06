@@ -30,6 +30,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         llenarCombobox();
+        llenarprimerCombobox();
+        llenarsegundoCombobox();
     }
     
     //Metodo para consultar 
@@ -80,10 +82,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
          modeEqui.addElement(temp);
      }
      this.cmbCodiEqui.setModel((ComboBoxModel)modeEqui);
+     }
+     
+     
+     private void llenarprimerCombobox(){
+     DefaultComboBoxModel<Equipos>modeEqui = new DefaultComboBoxModel<>();
+     for (Equipos temp : new EquiposCtrl().consTodo())
+     {
+         modeEqui.addElement(temp);
+     }
      this.cmbCodiEquiPart1.setModel((ComboBoxModel)modeEqui);
+     }
+     
+      private void llenarsegundoCombobox(){
+     DefaultComboBoxModel<Equipos>modeEqui = new DefaultComboBoxModel<>();
+     for (Equipos temp : new EquiposCtrl().consTodo())
+     {
+         modeEqui.addElement(temp);
+     }
      this.cmbCodiEquiPart2.setModel((ComboBoxModel)modeEqui);
      }
 
+     /*
+     
+     this.cmbCodiEquiPart1.setModel((ComboBoxModel)modeEqui);
+     this.cmbCodiEquiPart2.setModel((ComboBoxModel)modeEqui);
+     */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -480,7 +504,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        txtCodiPart.setEditable(false);
         txtCodiPart.setText("1");
         txtCodiPart.setToolTipText("");
 
@@ -987,7 +1010,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnModificarPart.setEnabled(true);
         btnEliminarPart.setEnabled(true);
         MostrarPart();
-        llenarCombobox();
+        llenarprimerCombobox();
+        llenarsegundoCombobox();
     }//GEN-LAST:event_btnConsultarPartActionPerformed
 
     private void btnEliminarPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPartActionPerformed
@@ -1026,7 +1050,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txtMarcEqui2.setText("");
         txtFechHora.setText("");
         txtLuga.setText("");
-        llenarCombobox();
+        llenarprimerCombobox();
+        llenarsegundoCombobox();
         tblPartidos.clearSelection();
         DefaultTableModel model = (DefaultTableModel)this.tblPartidos.getModel();
         while (model.getRowCount()>0){model.removeRow(0);}
@@ -1113,7 +1138,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             int fila = this.tblPartidos.getSelectedRow();
             if(fila >= 0)
             {
-                Partidos obje = (Partidos)this.tblPartidos.getValueAt(fila, 3);
+                Partidos obje = (Partidos)this.tblPartidos.getValueAt(fila, 1);
                 this.txtCodiPart.setText(String.valueOf(obje.getCodiPart()));
                 this.cmbCodiEquiPart1.setEditable(true);
                 this.cmbCodiEquiPart1.setSelectedItem((Equipos)new EquiposCtrl().concmb(obje.getCodiEqui1()));
