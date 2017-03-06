@@ -7,8 +7,10 @@ package com.sv.udb.vista;
 
 import com.sv.udb.controlador.EquiposCtrl;
 import com.sv.udb.controlador.JugadoresCtrl;
+import com.sv.udb.controlador.PartidosCtrl;
 import com.sv.udb.modelo.Equipos;
 import com.sv.udb.modelo.Jugadores;
+import com.sv.udb.modelo.Partidos;
 import com.sv.udb.recursos.Conexion;
 import java.sql.Connection;
 import javax.swing.ComboBoxModel;
@@ -58,6 +60,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }    
     }
      
+     public void MostrarPart(){
+          try {
+            DefaultTableModel model = (DefaultTableModel)this.tblPartidos.getModel();
+            while (model.getRowCount()>0){model.removeRow(0);}//Limpiar modelo
+            for(Partidos temp : new PartidosCtrl().constTodo())
+            {
+                model.addRow(new Object[]{temp.getCodiEqui1(),temp.getCodiEqui2(),temp.getGoleEqui1(),temp.getGoleEqui2(), temp.getFechHora(), temp.getLugar()});
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }    
+    }
+     
      private void llenarCombobox(){
      DefaultComboBoxModel<Equipos>modeEqui = new DefaultComboBoxModel<>();
      for (Equipos temp : new EquiposCtrl().consTodo())
@@ -65,6 +80,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
          modeEqui.addElement(temp);
      }
      this.cmbCodiEqui.setModel((ComboBoxModel)modeEqui);
+     this.cmbCodiEquiPart1.setModel((ComboBoxModel)modeEqui);
+     this.cmbCodiEquiPart2.setModel((ComboBoxModel)modeEqui);
      }
 
     /**
@@ -112,6 +129,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblJugadores = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtMarcEqui1 = new javax.swing.JTextField();
+        txtCodiPart = new javax.swing.JTextField();
+        btnConsultarPart = new javax.swing.JButton();
+        btnEliminarPart = new javax.swing.JButton();
+        btnNuevoPart = new javax.swing.JButton();
+        btnModificarPart = new javax.swing.JButton();
+        btnGuardarPart = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txtMarcEqui2 = new javax.swing.JTextField();
+        txtFechHora = new javax.swing.JTextField();
+        cmbCodiEquiPart1 = new javax.swing.JComboBox();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblPartidos = new javax.swing.JTable();
+        cmbCodiEquiPart2 = new javax.swing.JComboBox();
+        txtLuga = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -247,7 +286,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
@@ -429,15 +468,223 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Jugadores", jPanel2);
 
+        jLabel10.setText("Codigo:");
+
+        jLabel11.setText("Equipo 1:");
+
+        jLabel12.setText("Equipo 2:");
+
+        txtMarcEqui1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMarcEqui1ActionPerformed(evt);
+            }
+        });
+
+        txtCodiPart.setEditable(false);
+        txtCodiPart.setText("1");
+        txtCodiPart.setToolTipText("");
+
+        btnConsultarPart.setText("Consultar");
+        btnConsultarPart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarPartActionPerformed(evt);
+            }
+        });
+
+        btnEliminarPart.setText("Eliminar");
+        btnEliminarPart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPartActionPerformed(evt);
+            }
+        });
+
+        btnNuevoPart.setText("Nuevo");
+        btnNuevoPart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoPartActionPerformed(evt);
+            }
+        });
+
+        btnModificarPart.setText("Modificar");
+        btnModificarPart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarPartActionPerformed(evt);
+            }
+        });
+
+        btnGuardarPart.setText("Guardar");
+        btnGuardarPart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarPartActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Goles Equipo 1:");
+
+        jLabel14.setText("Goles Equipo 2:");
+
+        jLabel15.setText("Fecha y Hora:");
+
+        cmbCodiEquiPart1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCodiEquiPart1ActionPerformed(evt);
+            }
+        });
+
+        tblPartidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Equipo 1", "Equipo 2", "Goles Equipo 1", "Goles Equipo 2", "Fecha y Hora", "Lugar"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPartidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPartidosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tblPartidosMouseEntered(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblPartidos);
+
+        jLabel16.setText("Lugar:");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel11))
+                                .addGap(37, 37, 37)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtMarcEqui1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                                    .addComponent(txtCodiPart, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMarcEqui2, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                                    .addComponent(txtFechHora, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                                    .addComponent(cmbCodiEquiPart1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbCodiEquiPart2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel15)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(btnGuardarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnConsultarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(btnModificarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnEliminarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(txtLuga))
+                            .addComponent(jLabel16))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(btnNuevoPart, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txtCodiPart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addGap(23, 23, 23)
+                                        .addComponent(jLabel12))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(cmbCodiEquiPart1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cmbCodiEquiPart2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(13, 13, 13)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(txtMarcEqui1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel14))
+                            .addComponent(txtMarcEqui2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(txtFechHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(txtLuga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGuardarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnConsultarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnModificarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminarPart, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(btnNuevoPart, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 748, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(0, 16, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 16, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 431, Short.MAX_VALUE)
+            .addGap(0, 487, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Partidos", jPanel3);
@@ -475,6 +722,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
        btnModificar1.setEnabled(false);
        btnEliminar1.setEnabled(false);
        btnNuevo1.setEnabled(false);
+       
+       btnGuardarPart.setEnabled(true);
+       btnConsultarPart.setEnabled(true);
+       btnModificarPart.setEnabled(false);
+       btnEliminarPart.setEnabled(false);
+       btnNuevoPart.setEnabled(false);
        
        
     }//GEN-LAST:event_formWindowOpened
@@ -590,9 +843,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
             {
                 JOptionPane.showMessageDialog(this, "Datos Eliminados");
                 MostrarJuga();
-                txtCodi.setText("");
-                txtNomb.setText("");
-                txtDesc.setText("");
+                txtCodi1.setText("1");
+                txtNombJuga.setText("");
+                txtEdad.setText("");
+                txtAltu.setText("");
+                txtPeso.setText("");
             }
             else
             {
@@ -726,6 +981,169 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnConsultarPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPartActionPerformed
+        btnGuardarPart.setEnabled(false);
+        btnNuevoPart.setEnabled(true);
+        btnModificarPart.setEnabled(true);
+        btnEliminarPart.setEnabled(true);
+        MostrarPart();
+        llenarCombobox();
+    }//GEN-LAST:event_btnConsultarPartActionPerformed
+
+    private void btnEliminarPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPartActionPerformed
+         try
+        {
+            Partidos obje = new Partidos();
+            obje.setCodiPart(Integer.parseInt(this.txtCodiPart.getText()));
+
+            if(new PartidosCtrl().elim(obje))
+            {
+                JOptionPane.showMessageDialog(this, "Datos Eliminados");
+                MostrarPart();
+                txtCodiPart.setText("1");
+                txtMarcEqui1.setText("");
+                txtMarcEqui2.setText("");
+                txtFechHora.setText("");
+                txtLuga.setText("");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_btnEliminarPartActionPerformed
+
+    private void btnNuevoPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPartActionPerformed
+        btnGuardarPart.setEnabled(true);
+        btnModificarPart.setEnabled(false);
+        btnEliminarPart.setEnabled(false);
+        btnNuevoPart.setEnabled(false);
+        txtCodiPart.setText("1");
+        txtMarcEqui1.setText("");
+        txtMarcEqui2.setText("");
+        txtFechHora.setText("");
+        txtLuga.setText("");
+        llenarCombobox();
+        tblPartidos.clearSelection();
+        DefaultTableModel model = (DefaultTableModel)this.tblPartidos.getModel();
+        while (model.getRowCount()>0){model.removeRow(0);}
+    }//GEN-LAST:event_btnNuevoPartActionPerformed
+
+    private void btnModificarPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarPartActionPerformed
+        try
+        {
+            Equipos objeEqu1 = (Equipos) this.cmbCodiEquiPart1.getSelectedItem();
+                Equipos objeEqu2 = (Equipos) this.cmbCodiEquiPart2.getSelectedItem();
+                Partidos obje = new Partidos();
+                obje.setCodiPart(Integer.parseInt(this.txtCodiPart.getText()));
+                obje.setCodiEqui1(objeEqu1.getCodiEqui());
+                obje.setCodiEqui2(objeEqu2.getCodiEqui());
+                obje.setGoleEqui1(Integer.parseInt(this.txtMarcEqui1.getText()));
+                obje.setGoleEqui2(Integer.parseInt(this.txtMarcEqui2.getText()));
+                obje.setFechHora(this.txtFechHora.getText());
+                obje.setLugar(this.txtLuga.getText());
+
+            if(new PartidosCtrl().modi(obje))
+            {
+                JOptionPane.showMessageDialog(this, "Datos Modificados");
+                MostrarPart();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+
+
+
+
+    }//GEN-LAST:event_btnModificarPartActionPerformed
+
+    private void btnGuardarPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPartActionPerformed
+        try {
+            if(txtMarcEqui1.getText().length()!=0 && txtMarcEqui2.getText().length()!=0 && txtFechHora.getText().length()!=0)
+            {
+               
+                Equipos objeEqu1 = (Equipos) this.cmbCodiEquiPart1.getSelectedItem();
+                Equipos objeEqu2 = (Equipos) this.cmbCodiEquiPart2.getSelectedItem();
+                Partidos obje = new Partidos();
+                obje.setCodiPart(Integer.parseInt(this.txtCodiPart.getText()));
+                obje.setCodiEqui1(objeEqu1.getCodiEqui());
+                obje.setCodiEqui2(objeEqu2.getCodiEqui());
+                obje.setGoleEqui1(Integer.parseInt(this.txtMarcEqui1.getText()));
+                obje.setGoleEqui2(Integer.parseInt(this.txtMarcEqui2.getText()));
+                obje.setFechHora(this.txtFechHora.getText());
+                obje.setLugar(this.txtLuga.getText());
+                
+                if(new PartidosCtrl().guar(obje))
+                {
+                    JOptionPane.showMessageDialog(this, "Datos guardados");
+                    txtCodiPart.setText("1");
+                    txtMarcEqui1.setText("");
+                    txtMarcEqui2.setText("");
+                    txtFechHora.setText("");
+                    txtLuga.setText("");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "No deje campos vacios");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+
+
+
+    }//GEN-LAST:event_btnGuardarPartActionPerformed
+
+    private void tblPartidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPartidosMouseClicked
+                try{
+            int fila = this.tblPartidos.getSelectedRow();
+            if(fila >= 0)
+            {
+                Partidos obje = (Partidos)this.tblPartidos.getValueAt(fila, 3);
+                this.txtCodiPart.setText(String.valueOf(obje.getCodiPart()));
+                this.cmbCodiEquiPart1.setEditable(true);
+                this.cmbCodiEquiPart1.setSelectedItem((Equipos)new EquiposCtrl().concmb(obje.getCodiEqui1()));
+                this.cmbCodiEquiPart1.setEditable(false);
+                this.cmbCodiEquiPart2.setEditable(true);
+                this.cmbCodiEquiPart2.setSelectedItem((Equipos)new EquiposCtrl().concmb(obje.getCodiEqui2()));
+                this.cmbCodiEquiPart2.setEditable(false);
+                this.txtMarcEqui1.setText(String.valueOf(obje.getGoleEqui1()));
+                this.txtMarcEqui2.setText(String.valueOf(obje.getGoleEqui2()));
+                this.txtFechHora.setText(obje.getFechHora());
+                this.txtLuga.setText(obje.getLugar());
+            }
+            }
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(this, "Error"+ ex.getMessage());
+            }
+    }//GEN-LAST:event_tblPartidosMouseClicked
+
+    private void cmbCodiEquiPart1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCodiEquiPart1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCodiEquiPart1ActionPerformed
+
+    private void txtMarcEqui1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMarcEqui1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMarcEqui1ActionPerformed
+
+    private void tblPartidosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPartidosMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblPartidosMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -764,16 +1182,30 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnConsultar1;
+    private javax.swing.JButton btnConsultarPart;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminar1;
+    private javax.swing.JButton btnEliminarPart;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardar1;
+    private javax.swing.JButton btnGuardarPart;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnModificar1;
+    private javax.swing.JButton btnModificarPart;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnNuevo1;
+    private javax.swing.JButton btnNuevoPart;
     private javax.swing.JComboBox cmbCodiEqui;
+    private javax.swing.JComboBox cmbCodiEquiPart1;
+    private javax.swing.JComboBox cmbCodiEquiPart2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -785,16 +1217,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblEquipos;
     private javax.swing.JTable tblJugadores;
+    private javax.swing.JTable tblPartidos;
     private javax.swing.JTextField txtAltu;
     private javax.swing.JTextField txtCodi;
     private javax.swing.JTextField txtCodi1;
+    private javax.swing.JTextField txtCodiPart;
     private javax.swing.JTextField txtDesc;
     private javax.swing.JTextField txtEdad;
+    private javax.swing.JTextField txtFechHora;
+    private javax.swing.JTextField txtLuga;
+    private javax.swing.JTextField txtMarcEqui1;
+    private javax.swing.JTextField txtMarcEqui2;
     private javax.swing.JTextField txtNomb;
     private javax.swing.JTextField txtNombJuga;
     private javax.swing.JTextField txtPeso;
