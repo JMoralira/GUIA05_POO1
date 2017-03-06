@@ -1,7 +1,6 @@
-
 package com.sv.udb.controlador;
 
-import com.sv.udb.modelo.Equipos;
+import com.sv.udb.modelo.Jugadores;
 import com.sv.udb.recursos.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,65 +8,59 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-      
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
  * @author Jose Lira
  */
-public class EquiposCtrl {
-    
+public class JugadoresCtrl {
     //GUARDAR
-    public boolean guar(Equipos obje)
+    public boolean guar(Jugadores obje)
     {
         boolean resp = false;
         Connection cn = new Conexion().getConn();
-        try
-        {
-            PreparedStatement cmd = cn.prepareStatement("insert into equipos values(NULL,?,?)");
-            cmd.setString(1, obje.getNombEqui());
-            cmd.setString(2, obje.getDescEqui());
+        try {
+            PreparedStatement cmd = cn.prepareStatement("insert into jugadores values(NULL,?,?,?,?,?)");
+            cmd.setInt(1, obje.getCodiEqui());
+            cmd.setString(2, obje.getNombJuga());
+            cmd.setInt(3, obje.getEdadJuga());
+            cmd.setDouble(4, obje.getAltuJuga());
+            cmd.setDouble(5, obje.getPesoJuga());
             cmd.executeUpdate();
             resp=true;
-        }
-        catch(Exception ex)
-        {
-            System.err.println("Error al guardar Equipos: " + ex.getMessage());
+            
+        } catch (Exception ex) {
+            System.err.println("Error al guardadr Jugadores" + ex.getMessage());
         }
         finally
         {
             try {
-                if(cn != null)
+                 if(cn != null)
                 {
                     if(!cn.isClosed())
                     {
                         cn.close();
                     }
                 }
-            } catch (SQLException err) {
+            } catch (Exception err) {
                 err.printStackTrace();
             }
         }
         return resp;
     }
     
+    
     //MOSTRAR
-    public List<Equipos> consTodo()
+    public List<Jugadores> constTodo()
     {
-        List<Equipos> resp = new ArrayList();
+        List<Jugadores> resp = new ArrayList();
         Connection cn = new Conexion().getConn();
-        try 
-        {
-            PreparedStatement cmd = cn.prepareStatement("select * from equipos");
+        try {
+            PreparedStatement cmd = cn.prepareStatement("select * from jugadores");
             ResultSet rs = cmd.executeQuery();
             while(rs.next())
             {
-                resp.add(new Equipos(rs.getInt(1),rs.getString(2),rs.getString(3)));               
+                resp.add(new Jugadores(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4), rs.getDouble(5), rs.getDouble(6)));               
             }
         } catch (Exception err) {
             err.printStackTrace();
@@ -89,14 +82,14 @@ public class EquiposCtrl {
         return resp;
     }
     
-    //MODIFICAR
-    public boolean modi(Equipos obje)
+      //MODIFICAR
+    public boolean modi(Jugadores obje)
     {
         boolean resp = false;
         Connection cn = new Conexion().getConn();
         try
         {
-            PreparedStatement cmd = cn.prepareStatement("update equipos set nomb_equi = '"+obje.getNombEqui()+"' , desc_equi = '"+obje.getDescEqui()+"' where codi_equi = "+obje.getCodiEqui()+"");
+            PreparedStatement cmd = cn.prepareStatement("update jugadores set codi_equi = "+obje.getCodiEqui()+" , nomb_juga = '"+obje.getNombJuga()+"' , edad_juga = "+obje.getEdadJuga()+" , altu_juga = "+obje.getAltuJuga()+" , peso_juga = "+obje.getPesoJuga()+" where codi_juga = "+obje.getCodiJuga()+"");
             cmd.executeUpdate();
             resp=true;
         }
@@ -122,13 +115,13 @@ public class EquiposCtrl {
     }
     
     //ELIMINAR
-    public boolean elim(Equipos obje)
+    public boolean elim(Jugadores obje)
     {
         boolean resp = false;
         Connection cn = new Conexion().getConn();
         try
         {
-            PreparedStatement cmd = cn.prepareStatement("delete from equipos where codi_equi = "+obje.getCodiEqui()+"");
+            PreparedStatement cmd = cn.prepareStatement("delete from jugadores where codi_juga = "+obje.getCodiJuga()+"");
             cmd.executeUpdate();
             resp=true;
         }
@@ -152,23 +145,4 @@ public class EquiposCtrl {
         }
         return resp;
     }
-     public Equipos concmb (int codiEqui)
-     {
-         Equipos resp = new Equipos();
-         Connection cn = new Conexion().getConn();
-         try {
-              PreparedStatement cmd = cn.prepareStatement("select * from equipos where codi_equi=?");
-              cmd.setInt(1, codiEqui);
-              ResultSet rs = cmd.executeQuery();
-              
-              while(rs.next())
-              {
-                  resp.setCodiEqui(rs.getInt(1));
-                  resp.setNombEqui(rs.getString(2));
-                  resp.setDescEqui(rs.getString(3));
-              }
-         } catch (Exception e) {
-         }
-         return resp;
-     }
 }

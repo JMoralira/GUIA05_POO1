@@ -6,9 +6,13 @@
 package com.sv.udb.vista;
 
 import com.sv.udb.controlador.EquiposCtrl;
+import com.sv.udb.controlador.JugadoresCtrl;
 import com.sv.udb.modelo.Equipos;
+import com.sv.udb.modelo.Jugadores;
 import com.sv.udb.recursos.Conexion;
 import java.sql.Connection;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +27,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
      */
     public FrmPrincipal() {
         initComponents();
+        llenarCombobox();
     }
     
     //Metodo para consultar 
@@ -38,6 +43,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }    
     }
+    
+    
+     public void MostrarJuga(){
+          try {
+            DefaultTableModel model = (DefaultTableModel)this.tblJugadores.getModel();
+            while (model.getRowCount()>0){model.removeRow(0);}//Limpiar modelo
+            for(Jugadores temp : new JugadoresCtrl().constTodo())
+            {
+                model.addRow(new Object[]{temp.getCodiEqui(),temp,temp.getEdadJuga(),temp.getAltuJuga(), temp.getPesoJuga()});
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }    
+    }
+     
+     private void llenarCombobox(){
+     DefaultComboBoxModel<Equipos>modeEqui = new DefaultComboBoxModel<>();
+     for (Equipos temp : new EquiposCtrl().consTodo())
+     {
+         modeEqui.addElement(temp);
+     }
+     this.cmbCodiEqui.setModel((ComboBoxModel)modeEqui);
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +91,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtEdad = new javax.swing.JTextField();
+        txtCodi1 = new javax.swing.JTextField();
+        txtNombJuga = new javax.swing.JTextField();
+        btnConsultar1 = new javax.swing.JButton();
+        btnEliminar1 = new javax.swing.JButton();
+        btnNuevo1 = new javax.swing.JButton();
+        btnModificar1 = new javax.swing.JButton();
+        btnGuardar1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtAltu = new javax.swing.JTextField();
+        txtPeso = new javax.swing.JTextField();
+        cmbCodiEqui = new javax.swing.JComboBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblJugadores = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -148,10 +196,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel3)
+                            .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGap(34, 34, 34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtCodi, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
@@ -176,7 +224,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtCodi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,13 +246,187 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Equipos", jPanel1);
+
+        jLabel4.setText("Codigo:");
+
+        jLabel5.setText("Codigo Equipo:");
+
+        jLabel6.setText("Nombre:");
+
+        txtCodi1.setEditable(false);
+        txtCodi1.setText("1");
+        txtCodi1.setToolTipText("");
+
+        txtNombJuga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombJugaActionPerformed(evt);
+            }
+        });
+
+        btnConsultar1.setText("Consultar");
+        btnConsultar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultar1ActionPerformed(evt);
+            }
+        });
+
+        btnEliminar1.setText("Eliminar");
+        btnEliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminar1ActionPerformed(evt);
+            }
+        });
+
+        btnNuevo1.setText("Nuevo");
+        btnNuevo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevo1ActionPerformed(evt);
+            }
+        });
+
+        btnModificar1.setText("Modificar");
+        btnModificar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificar1ActionPerformed(evt);
+            }
+        });
+
+        btnGuardar1.setText("Guardar");
+        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar1ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Edad:");
+
+        jLabel8.setText("Altura");
+
+        jLabel9.setText("Peso");
+
+        tblJugadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo Equipo", "Nombre", "Edad", "Altura", "Peso"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblJugadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblJugadoresMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblJugadores);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombJuga)
+                            .addComponent(txtEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(txtCodi1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAltu, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(txtPeso, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(cmbCodiEqui, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnGuardar1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnConsultar1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtCodi1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(23, 23, 23)
+                                        .addComponent(jLabel6))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(cmbCodiEqui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtNombJuga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8))
+                            .addComponent(txtAltu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnGuardar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnConsultar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnModificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Jugadores", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,9 +439,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
                 .addContainerGap())
         );
 
@@ -342,7 +564,151 @@ public class FrmPrincipal extends javax.swing.JFrame {
        btnModificar.setEnabled(false);
        btnEliminar.setEnabled(false);
        btnNuevo.setEnabled(false);
+       
+       
+       btnGuardar1.setEnabled(true);
+       btnConsultar1.setEnabled(true);
+       btnModificar1.setEnabled(false);
+       btnEliminar1.setEnabled(false);
+       btnNuevo1.setEnabled(false);
+       
+       
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnConsultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultar1ActionPerformed
+        btnGuardar1.setEnabled(false);
+        btnNuevo1.setEnabled(true);
+        btnModificar1.setEnabled(true);
+        btnEliminar1.setEnabled(true);
+        MostrarJuga();
+    }//GEN-LAST:event_btnConsultar1ActionPerformed
+
+    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
+        try 
+        {
+            Jugadores obje = new Jugadores();
+            obje.setCodiJuga(Integer.parseInt(this.txtCodi1.getText()));
+            
+            if(new JugadoresCtrl().elim(obje))
+            {
+                JOptionPane.showMessageDialog(this, "Datos Eliminados");
+                MostrarJuga();
+                 txtCodi.setText("");
+                 txtNomb.setText("");
+                 txtDesc.setText("");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminar1ActionPerformed
+
+    private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
+        btnGuardar1.setEnabled(true);
+       btnModificar1.setEnabled(false);
+       btnEliminar1.setEnabled(false);
+       btnNuevo1.setEnabled(false);
+       txtCodi1.setText("1");
+       txtNombJuga.setText("");
+       txtEdad.setText("");
+       txtAltu.setText("");
+       txtPeso.setText("");
+       tblJugadores.clearSelection();
+       DefaultTableModel model = (DefaultTableModel)this.tblJugadores.getModel();
+       while (model.getRowCount()>0){model.removeRow(0);}
+    }//GEN-LAST:event_btnNuevo1ActionPerformed
+
+    private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
+        try 
+        {
+            Equipos objeEqui = (Equipos) this.cmbCodiEqui.getSelectedItem();
+           Jugadores obje = new Jugadores();
+            obje.setCodiJuga(Integer.parseInt(this.txtCodi1.getText()));
+            obje.setCodiEqui(objeEqui.getCodiEqui());
+            //obje.setCodiEqui(toString(this.cmbCodiEqui.getSelectedIndex()));
+            obje.setNombJuga(this.txtNombJuga.getText());
+            obje.setEdadJuga(Integer.parseInt(this.txtEdad.getText()));
+            obje.setAltuJuga(Double.parseDouble(this.txtAltu.getText()));
+            obje.setPesoJuga(Double.parseDouble(this.txtPeso.getText()));
+            
+            if(new JugadoresCtrl().modi(obje))
+            {
+                JOptionPane.showMessageDialog(this, "Datos Modificados");
+                MostrarJuga();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnModificar1ActionPerformed
+
+    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+        try {
+            if(txtNombJuga.getText().length()!=0 && txtEdad.getText().length()!=0 && txtAltu.getText().length()!=0 && txtPeso.getText().length()!=0)
+            {
+                // this.cmbCodiEqui.setSelectedIndex(obje.getCodiEqui());
+            Equipos objeEqui = (Equipos) this.cmbCodiEqui.getSelectedItem();
+            Jugadores obje = new Jugadores();
+            obje.setCodiJuga(Integer.parseInt(this.txtCodi1.getText()));
+            obje.setCodiEqui(objeEqui.getCodiEqui());
+            obje.setNombJuga(this.txtNombJuga.getText());
+            obje.setEdadJuga(Integer.parseInt(this.txtEdad.getText()));
+            obje.setAltuJuga(Double.parseDouble(this.txtAltu.getText()));
+            obje.setPesoJuga(Double.parseDouble(this.txtPeso.getText()));
+            
+            if(new JugadoresCtrl().guar(obje))
+            {
+                JOptionPane.showMessageDialog(this, "Datos guardados"); 
+                 txtCodi1.setText("1");
+                 txtNombJuga.setText("");
+                 txtEdad.setText("");
+                 txtAltu.setText("");
+                 txtPeso.setText("");
+            }
+             else
+            {
+                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+            }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "No deje campos vacios");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+                                       
+    }//GEN-LAST:event_btnGuardar1ActionPerformed
+
+    private void txtNombJugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombJugaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombJugaActionPerformed
+
+    private void tblJugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJugadoresMouseClicked
+        try{
+        int fila = this.tblJugadores.getSelectedRow();
+        if(fila >= 0)
+        {
+            Jugadores obje = (Jugadores)this.tblJugadores.getValueAt(fila, 1);
+            this.txtCodi1.setText(String.valueOf(obje.getCodiJuga()));
+            this.cmbCodiEqui.setEditable(true);
+            this.cmbCodiEqui.setSelectedItem((Equipos)new EquiposCtrl().concmb(obje.getCodiEqui()));
+            this.cmbCodiEqui.setEditable(false);
+            this.txtNombJuga.setText(obje.getNombJuga());
+            this.txtEdad.setText(String.valueOf(obje.getEdadJuga()));
+            this.txtAltu.setText(String.valueOf(obje.getAltuJuga()));
+            this.txtPeso.setText(String.valueOf(obje.getPesoJuga()));
+        }}
+        catch(Exception ex){
+        JOptionPane.showMessageDialog(this, "Error"+ ex.getMessage());
+        }
+    }//GEN-LAST:event_tblJugadoresMouseClicked
 
     /**
      * @param args the command line arguments
@@ -381,19 +747,39 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnConsultar1;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminar1;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardar1;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnModificar1;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnNuevo1;
+    private javax.swing.JComboBox cmbCodiEqui;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblEquipos;
+    private javax.swing.JTable tblJugadores;
+    private javax.swing.JTextField txtAltu;
     private javax.swing.JTextField txtCodi;
+    private javax.swing.JTextField txtCodi1;
     private javax.swing.JTextField txtDesc;
+    private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtNomb;
+    private javax.swing.JTextField txtNombJuga;
+    private javax.swing.JTextField txtPeso;
     // End of variables declaration//GEN-END:variables
 }
