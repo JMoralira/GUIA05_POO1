@@ -111,6 +111,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         cmbCodiEqui = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblJugadores = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -428,6 +429,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Jugadores", jPanel2);
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 748, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 431, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab3", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -448,116 +462,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try 
-        {
-            if(txtNomb.getText().length()!=0 && txtDesc.getText().length()!=0)
-            {
-            Equipos obje = new Equipos();
-            obje.setCodiEqui(Integer.parseInt(this.txtCodi.getText()));
-            obje.setNombEqui(this.txtNomb.getText());
-            obje.setDescEqui(this.txtDesc.getText());
-            
-            if(new EquiposCtrl().guar(obje))
-            {
-                JOptionPane.showMessageDialog(this, "Datos guardados"); 
-                 txtNomb.setText("");
-                 txtDesc.setText("");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
-            }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "No deje campos vacios");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        btnGuardar.setEnabled(false);
-        btnNuevo.setEnabled(true);
-        btnModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
-        Mostrar();
-      
-    }//GEN-LAST:event_btnConsultarActionPerformed
-
-    private void tblEquiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEquiposMouseClicked
-        int fila = this.tblEquipos.getSelectedRow();
-        if(fila >= 0)
-        {
-            Equipos obje = (Equipos)this.tblEquipos.getValueAt(fila, 0);
-            this.txtCodi.setText(String.valueOf(obje.getCodiEqui()));
-            this.txtNomb.setText(obje.getNombEqui());
-            this.txtDesc.setText(obje.getDescEqui());
-        }
-    }//GEN-LAST:event_tblEquiposMouseClicked
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-         try 
-        {
-            Equipos obje = new Equipos();
-            obje.setCodiEqui(Integer.parseInt(this.txtCodi.getText()));
-            obje.setNombEqui(this.txtNomb.getText());
-            obje.setDescEqui(this.txtDesc.getText());
-            
-            if(new EquiposCtrl().modi(obje))
-            {
-                JOptionPane.showMessageDialog(this, "Datos Modificados");
-                Mostrar();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }       
-        
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-       btnGuardar.setEnabled(true);
-       btnModificar.setEnabled(false);
-       btnEliminar.setEnabled(false);
-       btnNuevo.setEnabled(false);
-       txtCodi.setText("1");
-       txtNomb.setText("");
-       txtDesc.setText("");
-       tblEquipos.clearSelection();
-       DefaultTableModel model = (DefaultTableModel)this.tblEquipos.getModel();
-       while (model.getRowCount()>0){model.removeRow(0);}
-       
-    }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try 
-        {
-            Equipos obje = new Equipos();
-            obje.setCodiEqui(Integer.parseInt(this.txtCodi.getText()));
-            
-            if(new EquiposCtrl().elim(obje))
-            {
-                JOptionPane.showMessageDialog(this, "Datos Eliminados");
-                Mostrar();
-                 txtCodi.setText("");
-                 txtNomb.setText("");
-                 txtDesc.setText("");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        btnGuardar.setEnabled(true);
        btnConsultar.setEnabled(true);
@@ -575,57 +479,69 @@ public class FrmPrincipal extends javax.swing.JFrame {
        
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnConsultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultar1ActionPerformed
-        btnGuardar1.setEnabled(false);
-        btnNuevo1.setEnabled(true);
-        btnModificar1.setEnabled(true);
-        btnEliminar1.setEnabled(true);
-        MostrarJuga();
-    }//GEN-LAST:event_btnConsultar1ActionPerformed
-
-    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
-        try 
-        {
-            Jugadores obje = new Jugadores();
-            obje.setCodiJuga(Integer.parseInt(this.txtCodi1.getText()));
-            
-            if(new JugadoresCtrl().elim(obje))
+    private void tblJugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJugadoresMouseClicked
+        try{
+            int fila = this.tblJugadores.getSelectedRow();
+            if(fila >= 0)
             {
-                JOptionPane.showMessageDialog(this, "Datos Eliminados");
-                MostrarJuga();
-                 txtCodi.setText("");
-                 txtNomb.setText("");
-                 txtDesc.setText("");
+                Jugadores obje = (Jugadores)this.tblJugadores.getValueAt(fila, 1);
+                this.txtCodi1.setText(String.valueOf(obje.getCodiJuga()));
+                this.cmbCodiEqui.setEditable(true);
+                this.cmbCodiEqui.setSelectedItem((Equipos)new EquiposCtrl().concmb(obje.getCodiEqui()));
+                this.cmbCodiEqui.setEditable(false);
+                this.txtNombJuga.setText(obje.getNombJuga());
+                this.txtEdad.setText(String.valueOf(obje.getEdadJuga()));
+                this.txtAltu.setText(String.valueOf(obje.getAltuJuga()));
+                this.txtPeso.setText(String.valueOf(obje.getPesoJuga()));
+            }}
+            catch(Exception ex){
+                JOptionPane.showMessageDialog(this, "Error"+ ex.getMessage());
+            }
+    }//GEN-LAST:event_tblJugadoresMouseClicked
+
+    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+        try {
+            if(txtNombJuga.getText().length()!=0 && txtEdad.getText().length()!=0 && txtAltu.getText().length()!=0 && txtPeso.getText().length()!=0)
+            {
+                // this.cmbCodiEqui.setSelectedIndex(obje.getCodiEqui());
+                Equipos objeEqui = (Equipos) this.cmbCodiEqui.getSelectedItem();
+                Jugadores obje = new Jugadores();
+                obje.setCodiJuga(Integer.parseInt(this.txtCodi1.getText()));
+                obje.setCodiEqui(objeEqui.getCodiEqui());
+                obje.setNombJuga(this.txtNombJuga.getText());
+                obje.setEdadJuga(Integer.parseInt(this.txtEdad.getText()));
+                obje.setAltuJuga(Double.parseDouble(this.txtAltu.getText()));
+                obje.setPesoJuga(Double.parseDouble(this.txtPeso.getText()));
+
+                if(new JugadoresCtrl().guar(obje))
+                {
+                    JOptionPane.showMessageDialog(this, "Datos guardados");
+                    txtCodi1.setText("1");
+                    txtNombJuga.setText("");
+                    txtEdad.setText("");
+                    txtAltu.setText("");
+                    txtPeso.setText("");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+                }
             }
             else
             {
-                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+                JOptionPane.showMessageDialog(this, "No deje campos vacios");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-    }//GEN-LAST:event_btnEliminar1ActionPerformed
 
-    private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
-        btnGuardar1.setEnabled(true);
-       btnModificar1.setEnabled(false);
-       btnEliminar1.setEnabled(false);
-       btnNuevo1.setEnabled(false);
-       txtCodi1.setText("1");
-       txtNombJuga.setText("");
-       txtEdad.setText("");
-       txtAltu.setText("");
-       txtPeso.setText("");
-       tblJugadores.clearSelection();
-       DefaultTableModel model = (DefaultTableModel)this.tblJugadores.getModel();
-       while (model.getRowCount()>0){model.removeRow(0);}
-    }//GEN-LAST:event_btnNuevo1ActionPerformed
+    }//GEN-LAST:event_btnGuardar1ActionPerformed
 
     private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
-        try 
+        try
         {
             Equipos objeEqui = (Equipos) this.cmbCodiEqui.getSelectedItem();
-           Jugadores obje = new Jugadores();
+            Jugadores obje = new Jugadores();
             obje.setCodiJuga(Integer.parseInt(this.txtCodi1.getText()));
             obje.setCodiEqui(objeEqui.getCodiEqui());
             //obje.setCodiEqui(toString(this.cmbCodiEqui.getSelectedIndex()));
@@ -633,7 +549,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             obje.setEdadJuga(Integer.parseInt(this.txtEdad.getText()));
             obje.setAltuJuga(Double.parseDouble(this.txtAltu.getText()));
             obje.setPesoJuga(Double.parseDouble(this.txtPeso.getText()));
-            
+
             if(new JugadoresCtrl().modi(obje))
             {
                 JOptionPane.showMessageDialog(this, "Datos Modificados");
@@ -648,33 +564,158 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificar1ActionPerformed
 
-    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
-        try {
-            if(txtNombJuga.getText().length()!=0 && txtEdad.getText().length()!=0 && txtAltu.getText().length()!=0 && txtPeso.getText().length()!=0)
-            {
-                // this.cmbCodiEqui.setSelectedIndex(obje.getCodiEqui());
-            Equipos objeEqui = (Equipos) this.cmbCodiEqui.getSelectedItem();
+    private void btnNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevo1ActionPerformed
+        btnGuardar1.setEnabled(true);
+        btnModificar1.setEnabled(false);
+        btnEliminar1.setEnabled(false);
+        btnNuevo1.setEnabled(false);
+        txtCodi1.setText("1");
+        txtNombJuga.setText("");
+        txtEdad.setText("");
+        txtAltu.setText("");
+        txtPeso.setText("");
+        llenarCombobox();
+        tblJugadores.clearSelection();
+        DefaultTableModel model = (DefaultTableModel)this.tblJugadores.getModel();
+        while (model.getRowCount()>0){model.removeRow(0);}
+    }//GEN-LAST:event_btnNuevo1ActionPerformed
+
+    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
+        try
+        {
             Jugadores obje = new Jugadores();
             obje.setCodiJuga(Integer.parseInt(this.txtCodi1.getText()));
-            obje.setCodiEqui(objeEqui.getCodiEqui());
-            obje.setNombJuga(this.txtNombJuga.getText());
-            obje.setEdadJuga(Integer.parseInt(this.txtEdad.getText()));
-            obje.setAltuJuga(Double.parseDouble(this.txtAltu.getText()));
-            obje.setPesoJuga(Double.parseDouble(this.txtPeso.getText()));
-            
-            if(new JugadoresCtrl().guar(obje))
+
+            if(new JugadoresCtrl().elim(obje))
             {
-                JOptionPane.showMessageDialog(this, "Datos guardados"); 
-                 txtCodi1.setText("1");
-                 txtNombJuga.setText("");
-                 txtEdad.setText("");
-                 txtAltu.setText("");
-                 txtPeso.setText("");
+                JOptionPane.showMessageDialog(this, "Datos Eliminados");
+                MostrarJuga();
+                txtCodi.setText("");
+                txtNomb.setText("");
+                txtDesc.setText("");
             }
-             else
+            else
             {
                 JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
             }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminar1ActionPerformed
+
+    private void btnConsultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultar1ActionPerformed
+        btnGuardar1.setEnabled(false);
+        btnNuevo1.setEnabled(true);
+        btnModificar1.setEnabled(true);
+        btnEliminar1.setEnabled(true);
+        MostrarJuga();
+        llenarCombobox();
+    }//GEN-LAST:event_btnConsultar1ActionPerformed
+
+    private void txtNombJugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombJugaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombJugaActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try
+        {
+            Equipos obje = new Equipos();
+            obje.setCodiEqui(Integer.parseInt(this.txtCodi.getText()));
+
+            if(new EquiposCtrl().elim(obje))
+            {
+                JOptionPane.showMessageDialog(this, "Datos Eliminados");
+                Mostrar();
+                txtCodi.setText("");
+                txtNomb.setText("");
+                txtDesc.setText("");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        btnGuardar.setEnabled(true);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnNuevo.setEnabled(false);
+        txtCodi.setText("1");
+        txtNomb.setText("");
+        txtDesc.setText("");
+        tblEquipos.clearSelection();
+        DefaultTableModel model = (DefaultTableModel)this.tblEquipos.getModel();
+        while (model.getRowCount()>0){model.removeRow(0);}
+
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try
+        {
+            Equipos obje = new Equipos();
+            obje.setCodiEqui(Integer.parseInt(this.txtCodi.getText()));
+            obje.setNombEqui(this.txtNomb.getText());
+            obje.setDescEqui(this.txtDesc.getText());
+
+            if(new EquiposCtrl().modi(obje))
+            {
+                JOptionPane.showMessageDialog(this, "Datos Modificados");
+                Mostrar();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void tblEquiposMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEquiposMouseClicked
+        int fila = this.tblEquipos.getSelectedRow();
+        if(fila >= 0)
+        {
+            Equipos obje = (Equipos)this.tblEquipos.getValueAt(fila, 0);
+            this.txtCodi.setText(String.valueOf(obje.getCodiEqui()));
+            this.txtNomb.setText(obje.getNombEqui());
+            this.txtDesc.setText(obje.getDescEqui());
+        }
+    }//GEN-LAST:event_tblEquiposMouseClicked
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        btnGuardar.setEnabled(false);
+        btnNuevo.setEnabled(true);
+        btnModificar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        Mostrar();
+
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try
+        {
+            if(txtNomb.getText().length()!=0 && txtDesc.getText().length()!=0)
+            {
+                Equipos obje = new Equipos();
+                obje.setCodiEqui(Integer.parseInt(this.txtCodi.getText()));
+                obje.setNombEqui(this.txtNomb.getText());
+                obje.setDescEqui(this.txtDesc.getText());
+
+                if(new EquiposCtrl().guar(obje))
+                {
+                    JOptionPane.showMessageDialog(this, "Datos guardados");
+                    txtNomb.setText("");
+                    txtDesc.setText("");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Oops! algo salio mal");
+                }
             }
             else
             {
@@ -683,32 +724,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-                                       
-    }//GEN-LAST:event_btnGuardar1ActionPerformed
-
-    private void txtNombJugaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombJugaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombJugaActionPerformed
-
-    private void tblJugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJugadoresMouseClicked
-        try{
-        int fila = this.tblJugadores.getSelectedRow();
-        if(fila >= 0)
-        {
-            Jugadores obje = (Jugadores)this.tblJugadores.getValueAt(fila, 1);
-            this.txtCodi1.setText(String.valueOf(obje.getCodiJuga()));
-            this.cmbCodiEqui.setEditable(true);
-            this.cmbCodiEqui.setSelectedItem((Equipos)new EquiposCtrl().concmb(obje.getCodiEqui()));
-            this.cmbCodiEqui.setEditable(false);
-            this.txtNombJuga.setText(obje.getNombJuga());
-            this.txtEdad.setText(String.valueOf(obje.getEdadJuga()));
-            this.txtAltu.setText(String.valueOf(obje.getAltuJuga()));
-            this.txtPeso.setText(String.valueOf(obje.getPesoJuga()));
-        }}
-        catch(Exception ex){
-        JOptionPane.showMessageDialog(this, "Error"+ ex.getMessage());
-        }
-    }//GEN-LAST:event_tblJugadoresMouseClicked
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -768,6 +784,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
